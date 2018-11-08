@@ -34,7 +34,7 @@ You should see the CRA landing page. They keep updating it, but it will look som
 
 We like a clean house. Let's first remove the modules and components we are not going to be using for this exercise.
 
-** Remove these files: **
+Remove these files:
 
 * `src/App.css`
 * `src/App.test.js`
@@ -140,7 +140,7 @@ const theme = {
   global: {
     font: {
       family: 'Roboto',
-      size: '18px',
+      size: '14px',
       height: '20px',
     },
   },
@@ -160,11 +160,11 @@ FYI. To access Roboto you need to include the font-face. Let's update `public/in
     ...
 +   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
     <title>React App</title>
-    <style type="text/css">
-      body {
-        margin: 0;
-      }
-    </style>
++   <style type="text/css">
++     body {
++       margin: 0;
++     }
++   </style>
   </head>
 ```
 
@@ -228,7 +228,7 @@ class App extends Component {
 }
 ```
 
-AppBar is just a Box with `row` direction. Children are justified `between` (a space will be added in between them) so that the title is on the left and the buttons are on the right. We add an `elevation` to simulate the same box-shadow from the original example.
+AppBar is just a Box with `row` direction. Children are justified `between` (a space will be added in between them). We add an `elevation` to simulate the same box-shadow from the original example.
 
 Look at your browser again. You should see the AppBar with the `brand` background and some elevation.
 
