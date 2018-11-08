@@ -362,3 +362,208 @@ class App extends Component {
   }
 }
 ```
+
+We are just leverating React state by creating a `showSidebar` flag initially set to false.
+Once we click in the notification button, we flip the `showSidebar` state so you can keep clicking the button to open/close the sidebar.
+
+## Adding Animation
+
+Currently, the sidebar suddenly appears and disappears. Let's make it smoother by using the [Collapsible](https://v2.grommet.io/collapsible) component.
+
+```diff
+- import { Box, Button, Heading, Grommet } from 'grommet';
++ import { Box, Button, Collapsible, Heading, Grommet } from 'grommet';
+```
+
+Let's put the sidebar as a children of collapsible.
+
+```diff
+-{showSidebar && (
++ <Collapsible direction="horizontal" open={showSidebar}>
+    <Box
++     flex
+      width='medium'
+      background='light-2'
+      elevation='small'
+      align='center'
+      justify='center'
+    >
+      sidebar
+    </Box>
++ </Collapsible>
+-)}
+```
+
+Now the sidebar animates in and out.
+
+## Making it responsive
+
+If you open this page in a mobile device it will look **terrible**. Relax, we will make it better by using [ResponsiveContext](https://v2.grommet.io/responsivecontext).
+
+As usual, importing first:
+
+```diff
+- import { Box, Button, Collapsible, Heading, Grommet } from 'grommet';
++import {
++ Box,
++ Button,
++ Collapsible,
++ Heading,
++ Grommet,
++ ResponsiveContext,
++} from 'grommet';
+```
+
+Be nice to your future co-workers and add one component by line when it gets too long.
+You may want to consider using [prettier](https://prettier.io/) to auto format for you.
+
+`ResponsiveContext` uses [react context api](https://reactjs.org/docs/context.html) behind the scenes. Let's wrap the `ResponsiveContext.Consumer` inside Grommet.
+
+```diff
+<Grommet theme={theme} full>
++ <ResponsiveContext.Consumer>
++   {size => (
+      <Box fill>
+        <AppBar>
+          <Heading level='3' margin='none'>My App</Heading>
+          <Button
+            icon={<Notification />}
+            onClick={() => this.setState({ showSidebar: !this.state.showSidebar })}
+          />
+        </AppBar>
+        <Box direction='row' flex>
+          <Box flex align='center' justify='center'>
+            app body
+          </Box>
+-         <Collapsible direction="horizontal" open={showSidebar}>
++         {size !== 'small' && (
++           <Collapsible direction="horizontal" open={showSidebar}>
+              <Box
+                flex
+                width='medium'
+                background='light-2'
+                elevation='small'
+                align='center'
+                justify='center'
+              >
+                sidebar
+              </Box>
+            </Collapsible>
++         )}
+        </Box>
+      </Box>
++   )}
++ </ResponsiveContext.Consumer>
+</Grommet>
+```
+
+If you open your browser and start resizing your window you will see that the sidebar disappears. What a great fix right? We understand that you may be upset right now, but we promise to fix this in the next section.
+
+## Using Layer
+
+[Layer](https://v2.grommet.io/layer) is one our our favorite components, it is really powerful as it handle accessibility and responsiveness.
+
+We will use it in our example when size is small so that the sidebar takes the entire screen.
+
+Please import the Layer first:
+
+```diff
++import {
++ Box,
++ Button,
++ Collapsible,
++ Heading,
++ Grommet,
++ Layer,
++ ResponsiveContext,
++} from 'grommet';
+```
+
+We now can change the logic to swap between Collapsible and Layer.
+
+```diff
+- {size !== 'small' && (
++ {(!showSidebar || size !== 'small') ? (
+    <Collapsible direction="horizontal" open={showSidebar}>
+      <Box
+        flex
+        width='medium'
+        background='light-2'
+        elevation='small'
+        align='center'
+        justify='center'
+      >
+        sidebar
+      </Box>
+    </Collapsible>
++ ): (
++   <Layer>
++     <Box
++       fill
++       background='light-2'
++       align='center'
++       justify='center'
++     >
++       sidebar
++     </Box>
++   </Layer>
+  )}
+```
+
+You can resize your browser now and you will see that the sidebar takes over in mobile.
+But there is not way to close it, but that's easy to add.
+
+Import the `FormClose` icon:
+
+```diff
+- import { Notification } from 'grommet-icons';
++ import { FormClose, Notification } from 'grommet-icons';
+```
+
+Let's add that to our Layer.
+
+```diff
+<Layer>
++ <Box
++   background='light-2'
++   tag='header'
++   justify='end'
++   align='center'
++   direction='row'
++ >
++   <Button
++     icon={<FormClose />}
++     onClick={() => this.setState({ showSidebar: false })}
++   />
++ </Box>
+  <Box
+    fill
+    background='light-2'
+    align='center'
+    justify='center'
+  >
+    sidebar
+  </Box>
+</Layer>
+```
+
+Well, let's celebrate because now we have a responsive Grommet app, thanks for hanging with us until now.
+
+## Final Considerations
+
+We will keep updating this starter page with more steps. The latest completed version of this exercise is available in this repo in the `master` branch.
+
+Grommet can co-exist with other frameworks. We will never add global styles that will affect your existing components. Although the reverse is not true. By helping other teams migrate to Grommet, we have identified a common problem: global CSS modifiers affecting Grommet components. Whenever you see something weird, try to [reproduce](https://codesandbox.io/s/m7mml8l0zj) it outside your application environment.
+
+If you are able to reproduce it, be nice, file an [issue](https://github.com/grommet/grommet/issues/new).
+If you cannot reproduce it, inspect your elements, and you will probably find some global CSS applying unexpected overly opinionated changes to our components. As always, you can join our [Slack](https://slackin.grommet.io) and share your pain with us.
+
+Finally, here are some additional pointers to keep you engaged:
+
+1) [Using Grommet in an existing app tutorial](https://github.com/grommet/grommet-starter-existing-app)
+2) [Grommet Storybook](https://storybook.grommet.io) - a lot of examples on how to use our components. Most of them are not real app scenarios though. They are there to illustrate our different props.
+3) [Grommet Sandbox](https://codesandbox.io/s/github/grommet/grommet-sandbox) - more friendly when you want to edit and play with the examples, also does not have real app scenarios.
+4) [Grommet Vending](https://github.com/grommet/grommet-vending) - a sample app done in v2.
+5) [Grommet Controls](https://grommet-nextjs.herokuapp.com/add-ons) - higher level grommet components maintained by one of our external contributors [Atanas Stoyanov](https://github.com/atanasster).
+6) [Grommet Site](https://github.com/grommet/grommet-site) - site for v2 implemented in grommet v2, of course.
+
