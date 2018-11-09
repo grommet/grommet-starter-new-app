@@ -461,7 +461,7 @@ If you open your browser and start resizing your window you will see that the si
 
 ## Using Layer
 
-[Layer](https://v2.grommet.io/layer) is one our our favorite components, it is really powerful as it handle accessibility and responsiveness.
+[Layer](https://v2.grommet.io/layer) is one our our favorite components, it is really powerful as it handles accessibility and responsiveness.
 
 We will use it in our example when size is small so that the sidebar takes the entire screen.
 
@@ -511,7 +511,7 @@ We now can change the logic to swap between Collapsible and Layer.
 ```
 
 You can resize your browser now and you will see that the sidebar takes over in mobile.
-But there is not way to close it, but that's easy to add.
+But there is not way to close it, but that's easy to fix.
 
 Import the `FormClose` icon:
 
