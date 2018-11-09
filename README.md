@@ -91,7 +91,7 @@ You should see a beautiful, mostly black and white (accessible), landing page :s
 To add grommet you first need to install our packages
 
 ```bash
-npm install grommet@next grommet-icons styled-components --save
+npm install grommet grommet-icons styled-components --save
 ```
 
 You can now add the import of the `Grommet` component.
