@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "grommet": "https://github.com/grommet/grommet/tarball/NEXT-stable",
+    "grommet": "^2.0.1",
     "grommet-icons": "^3.2.0",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
