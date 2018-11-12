@@ -125,16 +125,17 @@ Let's replace the main `div` with `Grommet`.
 - </div>
 ```
 
-Nothing should change by including Grommet.
+You will notice no visible change resulted from including Grommet.
 Everything in Grommet is self-contained with very minimal global settings.
 
-You should be asking why you are including it if nothing is changing.
-The answer for this question is simple. Although not strictly required,
+You might be asking, 'Why do you include it if nothing is changing?'
+The answer is simple: Although not strictly required,
 we recommend you add `Grommet` from day one, so that you can customize it
-in the future by using the theme.
+in the future by using a `theme`.
 
 Let's now remove `plain` from Grommet and add a custom font-family, font-size, and line-height.
 
+Below the `import` statements, let's add an initial theme declaration:
 ```javascript
 const theme = {
   global: {
@@ -145,7 +146,9 @@ const theme = {
     },
   },
 };
-
+```
+And modify the Grommet tag with our new theme:
+```javascript
 <Grommet theme={theme}>
 ```
 
@@ -168,13 +171,13 @@ FYI. To access Roboto you need to include the font-face. Let's update `public/in
   </head>
 ```
 
-Go back to your browser of choice, and you should see that the font-size and font-family are properly applied.
+Look at your updated landing page, and you should see that the font-size and font-family are properly applied.
 
 Good job, you just completed an important step in your Grommet journey.
 
 ## Using Box
 
-[Box](https://v2.grommet.io/box) is an abstraction over [Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox) and it is very likely you will be using it all over the place in your Grommet app.
+[Box](https://v2.grommet.io/box) is an abstraction over [Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox), and it is very likely you will be using it very frequently in your Grommet app.
 
 To use Box we first need to import it:
 
@@ -232,7 +235,7 @@ AppBar is just a Box with `row` direction. Children are justified `between` (a s
 
 Look at your browser again. You should see the AppBar with the `brand` background and some elevation.
 
-Usually you are working in a company that has its own brand colors, let's fix that. The place to change colors is the theme object, as you might have already guessed.
+With Grommet it is very easy to apply custom brand colors. The place to change colors is in the theme object as you might have already guessed.
 
 ```diff
 const theme = {
@@ -249,10 +252,9 @@ const theme = {
 };
 ```
 
-The AppBar now has a different color. You can create colors with any name, `brand` was just an example.
-Another great feature that is available to you is to use one color that has two variations: `dark` and `light`.
-This is very useful when you want to apply a different color depending on your context. For example, use a light text color in a dark background, and vice-versa.
-We have created this [codesandbox](https://codesandbox.io/s/213mry1mnj) with more details on color usage.
+The AppBar now has a different color. You can create colors with any name; `brand` was just an example.
+Another great Grommet feature is the ability to easily declare context-aware colors which automatically adapt to light and dark themes. That is, any color can have two variations: `dark` and `light`. For example, use a light text color in a dark background, 
+and vice-versa. We have created this [codesandbox](https://codesandbox.io/s/213mry1mnj) with more details on color usage.
 
 ## Improving the AppBar
 
@@ -307,11 +309,11 @@ We will have a main left panel and a sidebar.
 </Grommet>
 ```
 
-We are extending Grommet to take the full viewport height and width. We add a Box to fill all the available space so that we have a flexbox container to rely on. The body is a Box with `row` direction, the `flex` prop just tells that Box to expand and take the rest of the avaible space (AppBar is taking some of the height in the container). The sidebar box has a `medium` width with a `light-2` background.
+We are extending Grommet to take the full viewport height and width. We add a Box to fill all the available space so that we have a flexbox container to rely on. The body is a Box with `row` direction. The `flex` prop instructs the Box to expand into the remaining available space (AppBar is taking some of the height in the container). The sidebar box has a `medium` width with a `light-2` background.
 
 ## Adding State
 
-Everything is so static here, let's add some state. We are going to hide the sidebar initially and show it only when we click the notifications icon inside the AppBar.
+Everything is so static here. Let's add some state. We are going to hide the sidebar initially and show it only when we click the notifications icon inside the AppBar.
 
 ```diff
 class App extends Component {
@@ -364,7 +366,8 @@ class App extends Component {
 ```
 
 We are just leverating React state by creating a `showSidebar` flag initially set to false.
-Once we click in the notification button, we flip the `showSidebar` state so you can keep clicking the button to open/close the sidebar.
+Once we click in the notification button, we toggle the `showSidebar` state. The button then serves to open and 
+close the sidebar.
 
 ## Adding Animation
 
@@ -394,11 +397,12 @@ Let's put the sidebar as a children of collapsible.
 -)}
 ```
 
-Now the sidebar animates in and out.
+Now the sidebar animates in and out. Without the added flex prop, the Box would no longer
+expand vertically to fill the available space.
 
 ## Making it responsive
 
-If you open this page in a mobile device it will look **terrible**. Relax, we will make it better by using [ResponsiveContext](https://v2.grommet.io/responsivecontext).
+If you open this page in a mobile device it will look **terrible**. You can verify this by reducing the browser window to approximate a mobile screensize. Relax, we will make it better by using [ResponsiveContext](https://v2.grommet.io/responsivecontext).
 
 As usual, importing first:
 
@@ -414,8 +418,9 @@ As usual, importing first:
 +} from 'grommet';
 ```
 
-Be nice to your future co-workers and add one component by line when it gets too long.
-You may want to consider using [prettier](https://prettier.io/) to auto format for you.
+Let's make this a little easier to read for you and your future co-workers by breaking
+the long import statement down to one component per line.
+You may want to consider using [prettier](https://prettier.io/) to auto format for you (Tip: you may want to change prettier config default to prettier.singleQuote: true).
 
 `ResponsiveContext` uses [react context api](https://reactjs.org/docs/context.html) behind the scenes. Let's wrap the `ResponsiveContext.Consumer` inside Grommet.
 
@@ -457,11 +462,11 @@ You may want to consider using [prettier](https://prettier.io/) to auto format f
 </Grommet>
 ```
 
-If you open your browser and start resizing your window you will see that the sidebar disappears. What a great fix right? We understand that you may be upset right now, but we promise to fix this in the next section.
+If you open your browser and start resizing your window you will see that the sidebar disappears. What a great fix, right? We understand that you may be upset right now, but we promise to fix this in the next section.
 
 ## Using Layer
 
-[Layer](https://v2.grommet.io/layer) is one our our favorite components, it is really powerful as it handles accessibility and responsiveness.
+[Layer](https://v2.grommet.io/layer) is one of our favorite components; it is very powerful as it handles accessibility and responsiveness.
 
 We will use it in our example when size is small so that the sidebar takes the entire screen.
 
@@ -510,8 +515,8 @@ We now can change the logic to swap between Collapsible and Layer.
   )}
 ```
 
-You can resize your browser now and you will see that the sidebar takes over in mobile.
-But there is not way to close it, but that's easy to fix.
+You can resize your browser now, and you will see that the sidebar takes over in mobile.
+But there is no way to close it, however that's easy to fix.
 
 Import the `FormClose` icon:
 
