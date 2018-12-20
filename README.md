@@ -200,7 +200,7 @@ Let's create an AppBar component and replace the `header` tag with it.
 +    background='brand'
 +    pad={{ left: 'medium', right: 'small', vertical: 'small' }}
 +    elevation='medium'
-+    style={{ zIndex: '100' }}
++    style={{ zIndex: '1' }}
 +    {...props}
 +  />
 +);
