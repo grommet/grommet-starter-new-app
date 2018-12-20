@@ -200,7 +200,7 @@ Let's create an AppBar component and replace the `header` tag with it.
 +    background='brand'
 +    pad={{ left: 'medium', right: 'small', vertical: 'small' }}
 +    elevation='medium'
-+    style={{ zIndex: '100' }}
++    style={{ zIndex: '1' }}
 +    {...props}
 +  />
 +);
@@ -291,7 +291,7 @@ We will have a main left panel and a sidebar.
       <Heading level='3' margin='none'>My App</Heading>
       <Button icon={<Notification />} onClick={() => {}} />
     </AppBar>
-+   <Box direction='row' flex>
++   <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
 +     <Box flex align='center' justify='center'>
 +       app body
 +     </Box>
@@ -309,7 +309,7 @@ We will have a main left panel and a sidebar.
 </Grommet>
 ```
 
-We are extending Grommet to take the full viewport height and width. We add a Box to fill all the available space so that we have a flexbox container to rely on. The body is a Box with `row` direction. The `flex` prop instructs the Box to expand into the remaining available space (AppBar is taking some of the height in the container). The sidebar box has a `medium` width with a `light-2` background.
+We are extending Grommet to take the full viewport height and width. We add a Box to fill all the available space so that we have a flexbox container to rely on. The body is a Box with `row` direction. The `flex` prop instructs the Box to expand into the remaining available space (AppBar is taking some of the height in the container). The `overflow` prop ensures that both the main panel and sidebar fit within the width of the viewport, instead of having to scroll horizontally. The sidebar box has a `medium` width with a `light-2` background.
 
 ## Adding State
 
@@ -333,7 +333,7 @@ class App extends Component {
 +             onClick={() => this.setState({ showSidebar: !this.state.showSidebar })}
 +           />
           </AppBar>
-          <Box direction='row' flex>
+          <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
             <Box flex align='center' justify='center'>
               app body
             </Box>
@@ -436,7 +436,7 @@ You may want to consider using [prettier](https://prettier.io/) to auto format f
             onClick={() => this.setState({ showSidebar: !this.state.showSidebar })}
           />
         </AppBar>
-        <Box direction='row' flex>
+        <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
           <Box flex align='center' justify='center'>
             app body
           </Box>
