@@ -91,7 +91,7 @@ You should see a beautiful, mostly black and white (accessible), landing page :s
 To add grommet you first need to install our packages
 
 ```bash
-npm install grommet styled-components --save
+npm install grommet grommet-icons styled-components --save
 ```
 
 You can now add the import of the `Grommet` component.
@@ -330,7 +330,7 @@ class App extends Component {
 -           <Button icon={<Notification />} onClick={() => {}} />
 +           <Button
 +             icon={<Notification />}
-+             onClick={() => this.setState({ showSidebar: !this.state.showSidebar })}
++             onClick={() => this.setState({ showSidebar: !showSidebar })}
 +           />
           </AppBar>
           <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
@@ -365,7 +365,7 @@ class App extends Component {
 }
 ```
 
-We are just leverating React state by creating a `showSidebar` flag initially set to false.
+We are just leveraging React state by creating a `showSidebar` flag initially set to false.
 Once we click in the notification button, we toggle the `showSidebar` state. The button then serves to open and 
 close the sidebar.
 
