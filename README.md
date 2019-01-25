@@ -330,7 +330,7 @@ class App extends Component {
 -           <Button icon={<Notification />} onClick={() => {}} />
 +           <Button
 +             icon={<Notification />}
-+             onClick={() => this.setState({ showSidebar: !this.state.showSidebar })}
++             onClick={() => this.setState(prevState => ({ showSidebar: !prevState.showSidebar }))}
 +           />
           </AppBar>
           <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
@@ -433,7 +433,7 @@ You may want to consider using [prettier](https://prettier.io/) to auto format f
           <Heading level='3' margin='none'>My App</Heading>
           <Button
             icon={<Notification />}
-            onClick={() => this.setState({ showSidebar: !this.state.showSidebar })}
+            onClick={() => this.setState(prevState => ({ showSidebar: !prevState.showSidebar }))}
           />
         </AppBar>
         <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
