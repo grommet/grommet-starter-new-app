@@ -330,7 +330,7 @@ class App extends Component {
 -           <Button icon={<Notification />} onClick={() => {}} />
 +           <Button
 +             icon={<Notification />}
-+             onClick={() => this.setState({ showSidebar: !showSidebar })}
++             onClick={() => this.setState({ showSidebar: !this.state.showSidebar })}
 +           />
           </AppBar>
           <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
