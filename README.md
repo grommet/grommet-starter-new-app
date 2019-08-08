@@ -36,10 +36,10 @@ We like a clean house. Let's first remove the modules and components we are not 
 
 Remove these files:
 
-* `src/App.css`
-* `src/App.test.js`
-* `src/index.css`
-* `src/logo.svg`
+- `src/App.css`
+- `src/App.test.js`
+- `src/index.css`
+- `src/logo.svg`
 
 Inside `src/index.js`, remove the import of `index.css`.
 
@@ -56,27 +56,25 @@ import React, { Component } from 'react';
 - import logo from './logo.svg';
 - import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
--         <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+-       <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
 }
 
 export default App;
@@ -97,7 +95,7 @@ npm install grommet grommet-icons styled-components --save
 You can now add the import of the `Grommet` component.
 
 ```diff
-import React, { Component } from 'react';
+import React from 'react';
 + import { Grommet } from 'grommet';
 ```
 
@@ -136,6 +134,7 @@ in the future by using a `theme`.
 Let's now remove `plain` from Grommet and add a custom font-family, font-size, and line-height.
 
 Below the `import` statements, let's add an initial theme declaration:
+
 ```javascript
 const theme = {
   global: {
@@ -147,7 +146,9 @@ const theme = {
   },
 };
 ```
+
 And modify the Grommet tag with our new theme:
+
 ```javascript
 <Grommet theme={theme}>
 ```
@@ -205,29 +206,25 @@ Let's create an AppBar component and replace the `header` tag with it.
 +  />
 +);
 
-class App extends Component {
-  render() {
-    return (
-      <Grommet theme={theme}>
--       <header className="App-header">
--         <p>
--          Edit <code>src/App.js</code> and save to reload.
--         </p>
--         <a
--           className="App-link"
--           href="https://reactjs.org"
--           target="_blank"
--           rel="noopener noreferrer"
--         >
--           Learn React
--         </a>
--       </header>
-+       <AppBar>
-+         Hello Grommet!
-+       </AppBar>
-      </Grommet>
-    );
-  }
+function App() {
+  return <Grommet theme={theme}>
+-   <header className="App-header">
+-     <p>
+-      Edit <code>src/App.js</code> and save to reload.
+-     </p>
+-     <a
+-       className="App-link"
+-       href="https://reactjs.org"
+-       target="_blank"
+-       rel="noopener noreferrer"
+-     >
+-       Learn React
+-     </a>
+-   </header>
++   <AppBar>
++     Hello Grommet!
++   </AppBar>
+  </Grommet>
 }
 ```
 
@@ -253,7 +250,7 @@ const theme = {
 ```
 
 The AppBar now has a different color. You can create colors with any name; `brand` was just an example.
-Another great Grommet feature is the ability to easily declare context-aware colors which automatically adapt to light and dark themes. That is, any color can have two variations: `dark` and `light`. For example, use a light text color in a dark background, 
+Another great Grommet feature is the ability to easily declare context-aware colors which automatically adapt to light and dark themes. That is, any color can have two variations: `dark` and `light`. For example, use a light text color in a dark background,
 and vice-versa. We have created this [codesandbox](https://codesandbox.io/s/213mry1mnj) with more details on color usage.
 
 ## Improving the AppBar
@@ -315,59 +312,59 @@ We are extending Grommet to take the full viewport height and width. We add a Bo
 
 Everything is so static here. Let's add some state. We are going to hide the sidebar initially and show it only when we click the notifications icon inside the AppBar.
 
+To start, we'll import the `useState` [React Hook](https://reactjs.org/docs/hooks-state.html).
+
 ```diff
-class App extends Component {
-+ state = {
-+   showSidebar: false,
-+ }
-  render() {
-+   const { showSidebar } = this.state;
-    return (
-      <Grommet theme={theme} full>
-        <Box fill>
-          <AppBar>
-            <Heading level='3' margin='none'>My App</Heading>
--           <Button icon={<Notification />} onClick={() => {}} />
-+           <Button
-+             icon={<Notification />}
-+             onClick={() => this.setState(prevState => ({ showSidebar: !prevState.showSidebar }))}
-+           />
-          </AppBar>
-          <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
-            <Box flex align='center' justify='center'>
-              app body
-            </Box>
--           <Box
--             width='medium'
--             background='light-2'
--             elevation='small'
--             align='center'
--             justify='center'
--           >
--             sidebar
--           </Box>
-+           {showSidebar && (
-+             <Box
-+               width='medium'
-+               background='light-2'
-+               elevation='small'
-+               align='center'
-+               justify='center'
-+             >
-+               sidebar
-+             </Box>
-+           )}
-         </Box>
-        </Box>
-      </Grommet>
-    );
-  }
-}
+- import React from "react";
++ import React, { useState } from "react";
 ```
 
-We are just leveraging React state by creating a `showSidebar` flag initially set to false.
-Once we click in the notification button, we toggle the `showSidebar` state. The button then serves to open and 
-close the sidebar.
+Then, we'll use the `useState` Hook to create a `sidebarVisible` flag initially set to `false`, and a `setSidebarVisibility` toggle that we will tie into our notification button.
+
+```diff
+function App() {
++ const [sidebarVisible, setSidebarVisibility] = useState(false)
+  return (
+    <Grommet theme={theme} full>
+      <Box fill>
+        <AppBar>
+          <Heading level='3' margin='none'>My App</Heading>
+-         <Button icon={<Notification />} onClick={() => {}} />
++         <Button
++           icon={<Notification />}
++           onClick={() => setSidebarVisibility(!sidebarVisible)}
++         />
+        </AppBar>
+        <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
+          <Box flex align='center' justify='center'>
+            app body
+          </Box>
+-         <Box
+-           width='medium'
+-           background='light-2'
+-           elevation='small'
+-           align='center'
+-           justify='center'
+-         >
+-           sidebar
+-         </Box>
++         {sidebarVisible && (
++           <Box
++             width='medium'
++             background='light-2'
++             elevation='small'
++             align='center'
++             justify='center'
++           >
++             sidebar
++           </Box>
++         )}
+       </Box>
+      </Box>
+    </Grommet>
+  );
+}
+```
 
 ## Adding Animation
 
@@ -381,8 +378,8 @@ Currently, the sidebar suddenly appears and disappears. Let's make it smoother b
 Let's put the sidebar as a children of collapsible.
 
 ```diff
--{showSidebar && (
-+ <Collapsible direction="horizontal" open={showSidebar}>
+-{sidebarVisible && (
++ <Collapsible direction="horizontal" open={sidebarVisible}>
     <Box
 +     flex
       width='medium'
@@ -433,16 +430,16 @@ You may want to consider using [prettier](https://prettier.io/) to auto format f
           <Heading level='3' margin='none'>My App</Heading>
           <Button
             icon={<Notification />}
-            onClick={() => this.setState(prevState => ({ showSidebar: !prevState.showSidebar }))}
+            onClick={() => setSidebarVisibility(!sidebarVisible)}
           />
         </AppBar>
         <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
           <Box flex align='center' justify='center'>
             app body
           </Box>
--         <Collapsible direction="horizontal" open={showSidebar}>
+-         <Collapsible direction="horizontal" open={sidebarVisible}>
 +         {size !== 'small' && (
-+           <Collapsible direction="horizontal" open={showSidebar}>
++           <Collapsible direction="horizontal" open={sidebarVisible}>
               <Box
                 flex
                 width='medium'
@@ -488,8 +485,8 @@ We now can change the logic to swap between Collapsible and Layer.
 
 ```diff
 - {size !== 'small' && (
-+ {(!showSidebar || size !== 'small') ? (
-    <Collapsible direction="horizontal" open={showSidebar}>
++ {(!sidebarVisible || size !== 'small') ? (
+    <Collapsible direction="horizontal" open={sidebarVisible}>
       <Box
         flex
         width='medium'
@@ -538,7 +535,7 @@ Let's add that to our Layer.
 + >
 +   <Button
 +     icon={<FormClose />}
-+     onClick={() => this.setState({ showSidebar: false })}
++     onClick={() => setSidebarVisibility(!sidebarVisible)}
 +   />
 + </Box>
   <Box
@@ -565,10 +562,9 @@ If you cannot reproduce it, inspect your elements, and you will probably find so
 
 Finally, here are some additional pointers to keep you engaged:
 
-1) [Using Grommet in an existing app tutorial](https://github.com/grommet/grommet-starter-existing-app)
-2) [Grommet Storybook](https://storybook.grommet.io) - a lot of examples on how to use our components. Most of them are not real app scenarios though. They are there to illustrate our different props.
-3) [Grommet Sandbox](https://codesandbox.io/s/github/grommet/grommet-sandbox) - more friendly when you want to edit and play with the examples, also does not have real app scenarios.
-4) [Grommet Vending](https://github.com/grommet/grommet-vending) - a sample app done in v2.
-5) [Grommet Controls](https://grommet-nextjs.herokuapp.com/add-ons) - higher level grommet components maintained by one of our external contributors [Atanas Stoyanov](https://github.com/atanasster).
-6) [Grommet Site](https://github.com/grommet/grommet-site) - site for v2 implemented in grommet v2, of course.
-
+1. [Using Grommet in an existing app tutorial](https://github.com/grommet/grommet-starter-existing-app)
+2. [Grommet Storybook](https://storybook.grommet.io) - a lot of examples on how to use our components. Most of them are not real app scenarios though. They are there to illustrate our different props.
+3. [Grommet Sandbox](https://codesandbox.io/s/github/grommet/grommet-sandbox) - more friendly when you want to edit and play with the examples, also does not have real app scenarios.
+4. [Grommet Vending](https://github.com/grommet/grommet-vending) - a sample app done in v2.
+5. [Grommet Controls](https://grommet-nextjs.herokuapp.com/add-ons) - higher level grommet components maintained by one of our external contributors [Atanas Stoyanov](https://github.com/atanasster).
+6. [Grommet Site](https://github.com/grommet/grommet-site) - site for v2 implemented in grommet v2, of course.
