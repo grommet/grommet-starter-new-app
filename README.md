@@ -554,6 +554,16 @@ Let's add that to our Layer.
 
 Well, let's celebrate because now we have a responsive Grommet app, thanks for hanging with us until now.
 
+## Using the Light and Dark Theme Modes
+
+Grommet has the ability to toggle between light and dark modes baked into the theme. To toggle the theme from the application level, you can use the `themeMode` prop for the Grommet component:
+
+```js
+<Grommet theme={theme} themeMode="dark">
+```
+
+This is useful when you wish to add a toggle for light and dark modes at the application level.
+
 ## Final Considerations
 
 We will keep updating this starter page with more steps. The latest completed version of this exercise is available in this repo in the `master` branch.
