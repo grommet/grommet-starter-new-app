@@ -12,7 +12,7 @@ create-react-app my-app
 cd my-app
 ```
 
-CRA will automatically install dependencies for you. It uses [Yarn](https://yarnpkg.com/en/) behind the scenes. If you prefer to use NPM, you can delete the `yarn.lock` file and run `npm install` manually.
+CRA will automatically install dependencies for you. It uses [Yarn](https://yarnpkg.com/en/) as a package manager behind the scenes. If you prefer to use NPM for your package management, you can delete the `yarn.lock` file and run `npm install` manually.
 
 ```bash
 rm -rf yarn.lock
