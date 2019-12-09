@@ -34,7 +34,7 @@ You should see the CRA landing page. They keep updating it, but it will look som
 
 We like a clean house. Let's first remove the modules and components we are not going to be using for this exercise.
 
-Remove these files:
+Remove these files from the 'src' directory:
 
 * `src/App.css`
 * `src/App.test.js`
@@ -311,7 +311,7 @@ We will have a main left panel and a sidebar.
 
 We are extending Grommet to take the full viewport height and width. We add a Box to fill all the available space so that we have a flexbox container to rely on. The body is a Box with `row` direction. The `flex` prop instructs the Box to expand into the remaining available space (AppBar is taking some of the height in the container). The `overflow` prop ensures that both the main panel and sidebar fit within the width of the viewport, instead of having to scroll horizontally. The sidebar box has a `medium` width with a `light-2` background.
 
-## Adding State
+## Adding React State
 
 Everything is so static here. Let's add some state. We are going to hide the sidebar initially and show it only when we click the notifications icon inside the AppBar.
 
