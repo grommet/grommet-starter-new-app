@@ -2,13 +2,20 @@
 
 Welcome :tada:! Thanks for your interest in starting fresh with Grommet, we are thrilled to have you on board.
 
+## Prerequisites
+This tutorial assumes that you have node.js and a package manager; either npm (npm is installed with node.js) or yarn package manager. Create react app can be installed globally or locally using npx (npx comes with npm 5.2+).
+
+[Node Download Page](https://nodejs.org/en/download/) - The latest LTS version will have node.js, npm, and npx.  
+[Create React App Local Install](https://create-react-app.dev/docs/getting-started/) - Instructions to install it locally can be found here (npm versions 5.2+).  
+[Create React App Global Install](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f) - Not Recommended - Instructions to install it globally can be found here (npm versions 5.1 or earlier).  
+[Yarn Package Manager](https://yarnpkg.com/en/docs/getting-started) - Not Required.  
+
 ## Getting Started
 
 We are going to leverage and install the awesome [create-react-app](https://facebook.github.io/create-react-app/). We will call it CRA from now on.
 
 ```bash
-npm install create-react-app -g
-create-react-app my-app
+npx create-react-app my-app
 cd my-app
 ```
 
@@ -52,31 +59,29 @@ import App from './App';
 Inside `src/App.js`, remove the logo and the import of `app.css`
 
 ```diff
-import React, { Component } from 'react';
+import React from 'react';
 - import logo from './logo.svg';
 - import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
--         <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+-        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
 }
 
 export default App;
@@ -97,7 +102,7 @@ npm install grommet grommet-icons styled-components --save
 You can now add the import of the `Grommet` component.
 
 ```diff
-import React, { Component } from 'react';
+import React from 'react';
 + import { Grommet } from 'grommet';
 ```
 
@@ -205,29 +210,25 @@ Let's create an AppBar component and replace the `header` tag with it.
 +  />
 +);
 
-class App extends Component {
-  render() {
-    return (
-      <Grommet theme={theme}>
--       <header className="App-header">
--         <p>
--          Edit <code>src/App.js</code> and save to reload.
--         </p>
--         <a
--           className="App-link"
--           href="https://reactjs.org"
--           target="_blank"
--           rel="noopener noreferrer"
--         >
--           Learn React
--         </a>
--       </header>
-+       <AppBar>
-+         Hello Grommet!
-+       </AppBar>
-      </Grommet>
-    );
-  }
+const App = () => {
+  return (
+    <Grommet theme={theme}>
+-     <header className="App-header">
+-       <p>
+-         Edit <code>src/App.js</code> and save to reload.
+-       </p>
+-       <a
+-         className="App-link"
+-         href="https://reactjs.org"
+-         target="_blank"
+-         rel="noopener noreferrer"
+-       >
+-         Learn React
+-       </a>
+-     </header>
++     <AppBar>Hello Grommet!</AppBar>
+    </Grommet>
+  );
 }
 ```
 
@@ -316,52 +317,52 @@ We are extending Grommet to take the full viewport height and width. We add a Bo
 Everything is so static here. Let's add some state. We are going to hide the sidebar initially and show it only when we click the notifications icon inside the AppBar.
 
 ```diff
-class App extends Component {
-+ state = {
-+   showSidebar: false,
-+ }
-  render() {
-+   const { showSidebar } = this.state;
-    return (
-      <Grommet theme={theme} full>
-        <Box fill>
-          <AppBar>
-            <Heading level='3' margin='none'>My App</Heading>
--           <Button icon={<Notification />} onClick={() => {}} />
-+           <Button
-+             icon={<Notification />}
-+             onClick={() => this.setState(prevState => ({ showSidebar: !prevState.showSidebar }))}
-+           />
-          </AppBar>
-          <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
-            <Box flex align='center' justify='center'>
-              app body
-            </Box>
--           <Box
--             width='medium'
--             background='light-2'
--             elevation='small'
--             align='center'
--             justify='center'
--           >
--             sidebar
--           </Box>
-+           {showSidebar && (
-+             <Box
-+               width='medium'
-+               background='light-2'
-+               elevation='small'
-+               align='center'
-+               justify='center'
-+             >
-+               sidebar
-+             </Box>
-+           )}
-         </Box>
-        </Box>
-      </Grommet>
-    );
-  }
+- import React from "react";
++ import React, { useState } from "react";
+```
+
+```diff
+const App = () => {
++ const [showSidebar, setShowSidebar] = useState(false);
+  return (
+    <Grommet theme={theme} full>
+      <Box fill>
+        <AppBar>
+          <Heading level='3' margin='none'>My App</Heading>
+-         <Button icon={<Notification />} onClick={() => {}} />
++         <Button
++           icon={<Notification />}
++           onClick={() => setShowSidebar(!showSidebar)}
++         />
+        </AppBar>
+        <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
+          <Box flex align='center' justify='center'>
+            app body
+          </Box>
+-         <Box
+-           width='medium'
+-           background='light-2'
+-           elevation='small'
+-           align='center'
+-           justify='center'
+-         >
+-           sidebar
+-         </Box>
++         {showSidebar && (
++           <Box
++             width='medium'
++             background='light-2'
++             elevation='small'
++             align='center'
++             justify='center'
++           >
++             sidebar
++           </Box>
++         )}
+      </Box>
+      </Box>
+    </Grommet>
+  );
 }
 ```
 
@@ -433,7 +434,7 @@ You may want to consider using [prettier](https://prettier.io/) to auto format f
           <Heading level='3' margin='none'>My App</Heading>
           <Button
             icon={<Notification />}
-            onClick={() => this.setState(prevState => ({ showSidebar: !prevState.showSidebar }))}
+            onClick={() => setShowSidebar(!showSidebar)}
           />
         </AppBar>
         <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
@@ -538,7 +539,7 @@ Let's add that to our Layer.
 + >
 +   <Button
 +     icon={<FormClose />}
-+     onClick={() => this.setState({ showSidebar: false })}
++     onClick={() => setShowSidebar(false)}
 +   />
 + </Box>
   <Box
@@ -581,4 +582,4 @@ Finally, here are some additional pointers to keep you engaged:
 4) [Grommet Vending](https://github.com/grommet/grommet-vending) - a sample app done in v2.
 5) [Grommet Controls](https://grommet-nextjs.herokuapp.com/add-ons) - higher level grommet components maintained by one of our external contributors [Atanas Stoyanov](https://github.com/atanasster).
 6) [Grommet Site](https://github.com/grommet/grommet-site) - site for v2 implemented in grommet v2, of course.
-
+7) [Grommet Slack Inviter](http://slackin.grommet.io/) - don't forget to join our awesome community!
