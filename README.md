@@ -272,11 +272,11 @@ Let import `Button`, `Heading`, and `Notification` icon.
 Update AppBar children to the following:
 
 ```diff
-  <AppBar>
--    Hello Grommet!
+- <AppBar>Hello Grommet!</AppBar>
++ <AppBar>
 +   <Heading level='3' margin='none'>My App</Heading>
 +   <Button icon={<Notification />} onClick={() => {}} />
-  </AppBar>
++ </AppBar>
 ```
 
 ## Adding a main body
@@ -474,15 +474,15 @@ We will use it in our example when size is small so that the sidebar takes the e
 Please import the Layer first:
 
 ```diff
-+import {
-+ Box,
-+ Button,
-+ Collapsible,
-+ Heading,
-+ Grommet,
+import {
+  Box,
+  Button,
+  Collapsible,
+  Heading,
+  Grommet,
 + Layer,
-+ ResponsiveContext,
-+} from 'grommet';
+  ResponsiveContext,
+} from 'grommet';
 ```
 
 We now can change the logic to swap between Collapsible and Layer.
