@@ -272,11 +272,11 @@ Let import `Button`, `Heading`, and `Notification` icon.
 Update AppBar children to the following:
 
 ```diff
-  <AppBar>
--    Hello Grommet!
+- <AppBar>Hello Grommet!</AppBar>
++ <AppBar>
 +   <Heading level='3' margin='none'>My App</Heading>
 +   <Button icon={<Notification />} onClick={() => {}} />
-  </AppBar>
++ </AppBar>
 ```
 
 ## Adding a main body
