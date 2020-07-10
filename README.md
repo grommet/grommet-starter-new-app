@@ -19,13 +19,7 @@ npx create-react-app my-app
 cd my-app
 ```
 
-CRA will automatically install dependencies for you. It uses [Yarn](https://yarnpkg.com/en/) as a package manager behind the scenes. If you prefer to use NPM for your package management, you can delete the `yarn.lock` file and run `npm install` manually.
-
-```bash
-rm -rf yarn.lock
-rm -rf node_modules
-npm install
-```
+CRA will automatically install dependencies for you. It uses [Yarn](https://yarnpkg.com/en/) as a package manager behind the scenes. If you prefer to use NPM for your package management, you can run `npx create-react-app my-app --use-npm` instead.
 
 Start the development server.
 
