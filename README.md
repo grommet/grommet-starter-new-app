@@ -572,7 +572,7 @@ We will keep updating this starter page with more steps. The latest completed ve
 Grommet can co-exist with other frameworks. We will never add global styles that will affect your existing components. Although the reverse is not true. By helping other teams migrate to Grommet, we have identified a common problem: global CSS modifiers affecting Grommet components. Whenever you see something weird, try to [reproduce](https://codesandbox.io/s/m7mml8l0zj) it outside your application environment.
 
 If you are able to reproduce it, be nice, file an [issue](https://github.com/grommet/grommet/issues/new).
-If you cannot reproduce it, inspect your elements, and you will probably find some global CSS applying unexpected overly opinionated changes to our components. As always, you can join our [Slack](https://slackin.grommet.io) and share your pain with us.
+If you cannot reproduce it, inspect your elements, and you will probably find some global CSS applying unexpected overly opinionated changes to our components. As always, you can join our [Slack](https://slack-invite.grommet.io/) and share your pain with us.
 
 Finally, here are some additional pointers to keep you engaged:
 
@@ -582,4 +582,4 @@ Finally, here are some additional pointers to keep you engaged:
 4) [Grommet Vending](https://github.com/grommet/grommet-vending) - a sample app done in v2.
 5) [Grommet Controls](https://grommet-nextjs.herokuapp.com/add-ons) - higher level grommet components maintained by one of our external contributors [Atanas Stoyanov](https://github.com/atanasster).
 6) [Grommet Site](https://github.com/grommet/grommet-site) - site for v2 implemented in grommet v2, of course.
-7) [Grommet Slack Inviter](http://slackin.grommet.io/) - don't forget to join our awesome community!
+7) [Grommet Slack Inviter](https://slack-invite.grommet.io/) - don't forget to join our awesome community!
