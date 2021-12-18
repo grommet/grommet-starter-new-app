@@ -423,7 +423,16 @@ Let's make this a little easier to read for you and your future co-workers by br
 the long import statement down to one component per line.
 You may want to consider using [prettier](https://prettier.io/) to auto format for you (Tip: you may want to change prettier config default to prettier.singleQuote: true).
 
-`ResponsiveContext` uses [react context api](https://reactjs.org/docs/context.html) behind the scenes. Let's wrap the `ResponsiveContext.Consumer` inside Grommet.
+`ResponsiveContext` uses [react context api](https://reactjs.org/docs/context.html) behind the scenes. 
+
+```diff
+const App = () => {
+  const [showSidebar, setShowSidebar] = useState(false);
++ const size = useContext(ResponsiveContext)
+  return (
+```
+
+Let's wrap the `ResponsiveContext.Consumer` inside Grommet.
 
 ```diff
 <Grommet theme={theme} full>
