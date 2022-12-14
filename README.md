@@ -32,6 +32,10 @@ Start the development server.
 ```bash
 npm start
 ```
+Or if you are using yarn:
+```bash
+yarn start
+```
 
 You should see the CRA landing page. They keep updating it, but it will look something like this:
 
@@ -51,7 +55,7 @@ Remove these files from the 'src' directory:
 Inside `src/index.js`, remove the import of `index.css`.
 
 ```diff
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 - import './index.css';
 import App from './App';
 ```
@@ -59,7 +63,6 @@ import App from './App';
 Inside `src/App.js`, remove the logo and the import of `app.css`
 
 ```diff
-import React from 'react';
 - import logo from './logo.svg';
 - import './App.css';
 
@@ -98,11 +101,14 @@ To add grommet you first need to install our packages
 ```bash
 npm install grommet grommet-icons styled-components --save
 ```
+Or if you are using yarn:
+```bash
+yarn add grommet grommet-icons styled-components --save
+```
 
-You can now add the import of the `Grommet` component.
+You can now add the import of the `Grommet` component to the `App.js` file.
 
 ```diff
-import React from 'react';
 + import { Grommet } from 'grommet';
 ```
 
@@ -112,7 +118,7 @@ Let's replace the main `div` with `Grommet`.
 
 ```diff
 - <div className="App">
-+ <Grommet plain>
++ <Grommet>
   <header className="App-header">
     <p>
       Edit <code>src/App.js</code> and save to reload.
@@ -138,7 +144,7 @@ The answer is simple: Although not strictly required,
 we recommend you add `Grommet` from day one, so that you can customize it
 in the future by using a `theme`.
 
-Let's now remove `plain` from Grommet and add a custom font-family, font-size, and line-height.
+Let's now and add a custom font-family, font-size, and line-height.
 
 Below the `import` statements, let's add an initial theme declaration:
 ```javascript
@@ -274,9 +280,16 @@ Update AppBar children to the following:
 ```diff
   <AppBar>
 -    Hello Grommet!
-+   <Heading level='3' margin='none'>My App</Heading>
++   <Heading level='1' margin='none'>My App</Heading>
 +   <Button icon={<Notification />} onClick={() => {}} />
   </AppBar>
+```
+
+Notice that the 'My App' Heading feels a bit large. We can adjust the font size of the Heading with the size prop. Changing the level will also automatically change the font size. However, it is very important that headings use the [correct level](https://www.w3.org/WAI/tutorials/page-structure/headings/) for accessibility.
+
+```diff
+-   <Heading level='1' margin='none'>My App</Heading>
++   <Heading level='1' size="small" margin='none'>My App</Heading>
 ```
 
 ## Adding a main body
@@ -289,7 +302,7 @@ We will have a main left panel and a sidebar.
 +<Grommet theme={theme} full>
 + <Box fill>
     <AppBar>
-      <Heading level='3' margin='none'>My App</Heading>
+      <Heading level='1' size="small" margin='none'>My App</Heading>
       <Button icon={<Notification />} onClick={() => {}} />
     </AppBar>
 +   <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
@@ -328,7 +341,7 @@ const App = () => {
     <Grommet theme={theme} full>
       <Box fill>
         <AppBar>
-          <Heading level='3' margin='none'>My App</Heading>
+          <Heading level='1' margin='none'>My App</Heading>
 -         <Button icon={<Notification />} onClick={() => {}} />
 +         <Button
 +           icon={<Notification />}
@@ -428,10 +441,10 @@ You may want to consider using [prettier](https://prettier.io/) to auto format f
 ```diff
 <Grommet theme={theme} full>
 + <ResponsiveContext.Consumer>
-+   {size => (
++   {(size) => (
       <Box fill>
         <AppBar>
-          <Heading level='3' margin='none'>My App</Heading>
+          <Heading level='1' margin='none'>My App</Heading>
           <Button
             icon={<Notification />}
             onClick={() => setShowSidebar(!showSidebar)}
@@ -579,7 +592,5 @@ Finally, here are some additional pointers to keep you engaged:
 1) [Using Grommet in an existing app tutorial](https://github.com/grommet/grommet-starter-existing-app)
 2) [Grommet Storybook](https://storybook.grommet.io) - a lot of examples on how to use our components. Most of them are not real app scenarios though. They are there to illustrate our different props.
 3) [Grommet Sandbox](https://codesandbox.io/s/github/grommet/grommet-sandbox) - more friendly when you want to edit and play with the examples, also does not have real app scenarios.
-4) [Grommet Vending](https://github.com/grommet/grommet-vending) - a sample app done in v2.
-5) [Grommet Controls](https://grommet-nextjs.herokuapp.com/add-ons) - higher level grommet components maintained by one of our external contributors [Atanas Stoyanov](https://github.com/atanasster).
-6) [Grommet Site](https://github.com/grommet/grommet-site) - site for v2 implemented in grommet v2, of course.
-7) [Grommet Slack Inviter](http://slackin.grommet.io/) - don't forget to join our awesome community!
+4) [Grommet Site](https://github.com/grommet/grommet-site) - resources and documentation for Grommet components can be found here.
+5) [Grommet Slack Inviter](https://slack-invite.grommet.io/) - don't forget to join our awesome community!
