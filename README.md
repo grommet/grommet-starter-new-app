@@ -267,12 +267,35 @@ and vice-versa. We have created this [codesandbox](https://codesandbox.io/s/213m
 
 Let's add some children to the AppBar to make it more realistic.
 
-Let import `Button`, `Heading`, and `Notification` icon.
+Let import `Button`, `Header`, `Heading`, and `Notification` icon.
 
 ```diff
 - import { Box, Grommet } from 'grommet';
-+ import { Box, Button, Heading, Grommet } from 'grommet';
++ import { Box, Button, Header, Heading, Grommet } from 'grommet';
 + import { Notification } from 'grommet-icons';
+```
+
+Now we can swap out the Box in the AppBar for the Header. Header is a specialized version of the Box component that defines some of the props commonly used for a header component automatically.
+
+```diff
+const AppBar = (props) => (
+-  <Box
+-    tag="header"
+-    direction="row"
+-    align="center"
+-    justify="between"
+-    background="brand"
+-    pad={{ left: "medium", right: "small", vertical: "small" }}
+-    elevation="medium"
+-    {...props}
+-  />
++ <Header
++   background="brand"
++   pad={{ left: "medium", right: "small", vertical: "small" }}
++   elevation="medium"
++   {...props}
++ />
+);
 ```
 
 Update AppBar children to the following:
@@ -421,11 +444,12 @@ If you open this page in a mobile device it will look **terrible**. You can veri
 As usual, importing first:
 
 ```diff
-- import { Box, Button, Collapsible, Heading, Grommet } from 'grommet';
+- import { Box, Button, Collapsible, Header, Heading, Grommet } from 'grommet';
 +import {
 + Box,
 + Button,
 + Collapsible,
++ Header,
 + Heading,
 + Grommet,
 + ResponsiveContext,
@@ -491,6 +515,7 @@ Please import the Layer first:
 + Box,
 + Button,
 + Collapsible,
++ Header,
 + Heading,
 + Grommet,
 + Layer,
