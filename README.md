@@ -3,12 +3,13 @@
 Welcome :tada:! Thanks for your interest in starting fresh with Grommet, we are thrilled to have you on board.
 
 ## Prerequisites
+
 This tutorial assumes that you have node.js and a package manager; either npm (npm is installed with node.js) or yarn package manager. Create react app can be installed globally or locally using npx (npx comes with npm 5.2+).
 
 [Node Download Page](https://nodejs.org/en/download/) - The latest LTS version will have node.js, npm, and npx.  
 [Create React App Local Install](https://create-react-app.dev/docs/getting-started/) - Instructions to install it locally can be found here (npm versions 5.2+).  
 [Create React App Global Install](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f) - Not Recommended - Instructions to install it globally can be found here (npm versions 5.1 or earlier).  
-[Yarn Package Manager](https://yarnpkg.com/en/docs/getting-started) - Not Required.  
+[Yarn Package Manager](https://yarnpkg.com/en/docs/getting-started) - Not Required.
 
 ## Getting Started
 
@@ -33,6 +34,12 @@ Start the development server.
 npm start
 ```
 
+Or if you are using yarn:
+
+```bash
+yarn start
+```
+
 You should see the CRA landing page. They keep updating it, but it will look something like this:
 
 ![CRA Screenshot](https://raw.githubusercontent.com/grommet/grommet-starter-new-app/master/public/cra-landing-page.png)
@@ -43,15 +50,15 @@ We like a clean house. Let's first remove the modules and components we are not 
 
 Remove these files from the 'src' directory:
 
-* `src/App.css`
-* `src/App.test.js`
-* `src/index.css`
-* `src/logo.svg`
+- `src/App.css`
+- `src/App.test.js`
+- `src/index.css`
+- `src/logo.svg`
 
 Inside `src/index.js`, remove the import of `index.css`.
 
 ```diff
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 - import './index.css';
 import App from './App';
 ```
@@ -59,7 +66,6 @@ import App from './App';
 Inside `src/App.js`, remove the logo and the import of `app.css`
 
 ```diff
-import React from 'react';
 - import logo from './logo.svg';
 - import './App.css';
 
@@ -99,10 +105,15 @@ To add grommet you first need to install our packages
 npm install grommet grommet-icons styled-components --save
 ```
 
-You can now add the import of the `Grommet` component.
+Or if you are using yarn:
+
+```bash
+yarn add grommet grommet-icons styled-components --save
+```
+
+You can now add the import of the `Grommet` component to the `App.js` file.
 
 ```diff
-import React from 'react';
 + import { Grommet } from 'grommet';
 ```
 
@@ -112,7 +123,7 @@ Let's replace the main `div` with `Grommet`.
 
 ```diff
 - <div className="App">
-+ <Grommet plain>
++ <Grommet full>
   <header className="App-header">
     <p>
       Edit <code>src/App.js</code> and save to reload.
@@ -138,23 +149,26 @@ The answer is simple: Although not strictly required,
 we recommend you add `Grommet` from day one, so that you can customize it
 in the future by using a `theme`.
 
-Let's now remove `plain` from Grommet and add a custom font-family, font-size, and line-height.
+Let's now and add a custom font-family, font-size, and line-height.
 
 Below the `import` statements, let's add an initial theme declaration:
+
 ```javascript
 const theme = {
   global: {
     font: {
-      family: 'Roboto',
-      size: '18px',
-      height: '20px',
+      family: "Roboto",
+      size: "18px",
+      height: "20px",
     },
   },
 };
 ```
+
 And modify the Grommet tag with our new theme:
+
 ```javascript
-<Grommet theme={theme}>
+<Grommet theme={theme} full>
 ```
 
 This theme will propagate to all components under this given `Grommet` instance.
@@ -180,15 +194,23 @@ Look at your updated landing page, and you should see that the font-size and fon
 
 Good job, you just completed an important step in your Grommet journey.
 
-## Using Box
+## Understanding Box
 
-[Box](https://v2.grommet.io/box) is an abstraction over [Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox), and it is very likely you will be using it very frequently in your Grommet app.
+[Box] is an abstraction over [Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox), and it is very likely you will be using it very frequently in your Grommet app.
 
-To use Box we first need to import it:
+[Box] is the main building block container for Grommet. There are also Grommet
+components that in essence are just Box components with a few initial props
+defined. For example the [Header], [Footer], and [Card] components are built using `Box`
+and can accept any props that `Box` can. The benefit of using components like
+`Header` and `Footer` is Grommet takes care of some of the work for you by
+pre-defining some props.
+
+To start off we are going to use the `Header` and `Text` components in our app. 
+Let's go the the `App.js` file and import them:
 
 ```diff
 - import { Grommet } from 'grommet';
-+ import { Box, Grommet } from 'grommet';
++ import { Grommet, Header, Text } from 'grommet';
 ```
 
 We like to keep our imports in alphabetical order :smile:.
@@ -197,17 +219,12 @@ Let's create an AppBar component and replace the `header` tag with it.
 
 ```diff
 +const AppBar = (props) => (
-+  <Box
-+    tag='header'
-+    direction='row'
-+    align='center'
-+    justify='between'
-+    background='brand'
-+    pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-+    elevation='medium'
-+    style={{ zIndex: '1' }}
-+    {...props}
-+  />
++ <Header
++   background="brand"
++   pad={{ left: "medium", right: "small", vertical: "small" }}
++   elevation="medium"
++   {...props}
++ />
 +);
 
 const App = () => {
@@ -226,7 +243,9 @@ const App = () => {
 -         Learn React
 -       </a>
 -     </header>
-+     <AppBar>Hello Grommet!</AppBar>
++     <AppBar>
++       <Text size="large">My App</Text>
++     </AppBar>
     </Grommet>
   );
 }
@@ -254,316 +273,318 @@ const theme = {
 ```
 
 The AppBar now has a different color. You can create colors with any name; `brand` was just an example.
-Another great Grommet feature is the ability to easily declare context-aware colors which automatically adapt to light and dark themes. That is, any color can have two variations: `dark` and `light`. For example, use a light text color in a dark background, 
-and vice-versa. We have created this [codesandbox](https://codesandbox.io/s/213mry1mnj) with more details on color usage.
+Another great Grommet feature is the ability to easily declare context-aware colors which automatically
+adapt to light and dark themes. That is, any color can have two variations: `dark` and `light`. For
+example, use a light text color in a dark background, and vice-versa. We have created this
+[codesandbox](https://codesandbox.io/s/213mry1mnj) with more details on color usage.
 
-## Improving the AppBar
+For more information on the theme checkout the [theme wiki page](https://github.com/grommet/grommet/wiki/Grommet-v2-theming-documentation).
 
-Let's add some children to the AppBar to make it more realistic.
+## Adding Page, PageContent, and PageHeader
 
-Let import `Button`, `Heading`, and `Notification` icon.
+Now that we have an AppBar setup let's add the [Page], [PageContent], and [PageHeader] components into our App.
 
 ```diff
-- import { Box, Grommet } from 'grommet';
-+ import { Box, Button, Heading, Grommet } from 'grommet';
-+ import { Notification } from 'grommet-icons';
+- import { Grommet, Header, Text } from 'grommet';
++ import { Grommet, Header, Page, PageContent, PageHeader, Text } from 'grommet';
 ```
 
-Update AppBar children to the following:
-
 ```diff
-  <AppBar>
--    Hello Grommet!
-+   <Heading level='3' margin='none'>My App</Heading>
-+   <Button icon={<Notification />} onClick={() => {}} />
-  </AppBar>
-```
-
-## Adding a main body
-
-Now that we have an AppBar let's augment the dashboard with a body.
-We will have a main left panel and a sidebar.
-
-```diff
--<Grommet theme={theme}>
-+<Grommet theme={theme} full>
-+ <Box fill>
+<Grommet theme={theme} full>
++ <Page>
     <AppBar>
-      <Heading level='3' margin='none'>My App</Heading>
-      <Button icon={<Notification />} onClick={() => {}} />
+      <Text size="large">My App</Text>
     </AppBar>
-+   <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
-+     <Box flex align='center' justify='center'>
-+       app body
-+     </Box>
-+     <Box
-+       width='medium'
-+       background='light-2'
-+       elevation='small'
-+       align='center'
-+       justify='center'
-+     >
-+       sidebar
-+     </Box>
-+   </Box>
-+ </Box>
++   <PageContent>
++     <PageHeader title="Welcome to Grommet!" />
++   </PageContent>
++ </Page>
 </Grommet>
 ```
 
-We are extending Grommet to take the full viewport height and width. We add a Box to fill all the available space so that we have a flexbox container to rely on. The body is a Box with `row` direction. The `flex` prop instructs the Box to expand into the remaining available space (AppBar is taking some of the height in the container). The `overflow` prop ensures that both the main panel and sidebar fit within the width of the viewport, instead of having to scroll horizontally. The sidebar box has a `medium` width with a `light-2` background.
+Page is a helpful container for providing consistent layout across pages in an application. Page and
+PageContent work together to ensure horizontal alignment, max-width, and responsive behaviors are
+applied in a consistent, turnkey manner.
+
+Notice that the AppBar is not a child of PageContent. This allows the AppBar to stretch across the full
+width of the screen without being constrained by the max-width of the PageContent.
 
 ## Adding React State
 
-Everything is so static here. Let's add some state. We are going to hide the sidebar initially and show it only when we click the notifications icon inside the AppBar.
+Everything is so static here. Let's add some state. We are going to add a button to the
+AppBar to switch between light and dark modes.
+
+We need to import [useState] from React and grab some icons from the [grommet-icons] library.
 
 ```diff
 - import React from "react";
 + import React, { useState } from "react";
-```
-
-```diff
-const App = () => {
-+ const [showSidebar, setShowSidebar] = useState(false);
-  return (
-    <Grommet theme={theme} full>
-      <Box fill>
-        <AppBar>
-          <Heading level='3' margin='none'>My App</Heading>
--         <Button icon={<Notification />} onClick={() => {}} />
-+         <Button
-+           icon={<Notification />}
-+           onClick={() => setShowSidebar(!showSidebar)}
-+         />
-        </AppBar>
-        <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
-          <Box flex align='center' justify='center'>
-            app body
-          </Box>
--         <Box
--           width='medium'
--           background='light-2'
--           elevation='small'
--           align='center'
--           justify='center'
--         >
--           sidebar
--         </Box>
-+         {showSidebar && (
-+           <Box
-+             width='medium'
-+             background='light-2'
-+             elevation='small'
-+             align='center'
-+             justify='center'
-+           >
-+             sidebar
-+           </Box>
-+         )}
-      </Box>
-      </Box>
-    </Grommet>
-  );
-}
-```
-
-We are just leveraging React state by creating a `showSidebar` flag initially set to false.
-Once we click in the notification button, we toggle the `showSidebar` state. The button then serves to open and 
-close the sidebar.
-
-## Adding Animation
-
-Currently, the sidebar suddenly appears and disappears. Let's make it smoother by using the [Collapsible](https://v2.grommet.io/collapsible) component.
-
-```diff
-- import { Box, Button, Heading, Grommet } from 'grommet';
-+ import { Box, Button, Collapsible, Heading, Grommet } from 'grommet';
-```
-
-Let's put the sidebar as a children of collapsible.
-
-```diff
--{showSidebar && (
-+ <Collapsible direction="horizontal" open={showSidebar}>
-    <Box
-+     flex
-      width='medium'
-      background='light-2'
-      elevation='small'
-      align='center'
-      justify='center'
-    >
-      sidebar
-    </Box>
-+ </Collapsible>
--)}
-```
-
-Now the sidebar animates in and out. Without the added flex prop, the Box would no longer
-expand vertically to fill the available space.
-
-## Making it responsive
-
-If you open this page in a mobile device it will look **terrible**. You can verify this by reducing the browser window to approximate a mobile screensize. Relax, we will make it better by using [ResponsiveContext](https://v2.grommet.io/responsivecontext).
-
-As usual, importing first:
-
-```diff
-- import { Box, Button, Collapsible, Heading, Grommet } from 'grommet';
-+import {
-+ Box,
-+ Button,
-+ Collapsible,
-+ Heading,
-+ Grommet,
-+ ResponsiveContext,
-+} from 'grommet';
+- import { Grommet, Header, Page, PageContent, PageHeader, Text } from 'grommet';
++ import {
++   Button,
++   Grommet,
++   Header,
++   Page,
++   PageContent,
++   PageHeader,
++   Text,
++ } from "grommet";
++ import { Moon, Sun } from "grommet-icons";
 ```
 
 Let's make this a little easier to read for you and your future co-workers by breaking
 the long import statement down to one component per line.
 You may want to consider using [prettier](https://prettier.io/) to auto format for you (Tip: you may want to change prettier config default to prettier.singleQuote: true).
 
-`ResponsiveContext` uses [react context api](https://reactjs.org/docs/context.html) behind the scenes. Let's wrap the `ResponsiveContext.Consumer` inside Grommet.
-
 ```diff
-<Grommet theme={theme} full>
-+ <ResponsiveContext.Consumer>
-+   {size => (
-      <Box fill>
+const App = () => {
++ const [dark, setDark] = useState(false);
++
+  return (
+-   <Grommet theme={theme} full>
++   <Grommet theme={theme} full themeMode={dark ? "dark" : "light"}>
+      <Page>
         <AppBar>
-          <Heading level='3' margin='none'>My App</Heading>
-          <Button
-            icon={<Notification />}
-            onClick={() => setShowSidebar(!showSidebar)}
-          />
+          <Text size="large">My App</Text>
++         <Button
++           a11yTitle={dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
++           icon={dark ? <Moon /> : <Sun />}
++           onClick={() => setDark(!dark)}
++         />
         </AppBar>
-        <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
-          <Box flex align='center' justify='center'>
-            app body
-          </Box>
--         <Collapsible direction="horizontal" open={showSidebar}>
-+         {size !== 'small' && (
-+           <Collapsible direction="horizontal" open={showSidebar}>
-              <Box
-                flex
-                width='medium'
-                background='light-2'
-                elevation='small'
-                align='center'
-                justify='center'
-              >
-                sidebar
-              </Box>
-            </Collapsible>
-+         )}
-        </Box>
-      </Box>
-+   )}
-+ </ResponsiveContext.Consumer>
-</Grommet>
+...
 ```
 
-If you open your browser and start resizing your window you will see that the sidebar disappears. What a great fix, right? We understand that you may be upset right now, but we promise to fix this in the next section.
+We are just leveraging React state by creating a `dark` flag initially set to false.
+Once we click the theme mode toggle button, we toggle the `dark` state. The button then switches the theme between 'dark' and 'light'.
 
-## Using Layer
+Notice that switching between light and dark mode isn't currently causing any changes.
+This is because our current theme doesn't have anything specified for dark mode. Lets
+merge our custom theme with the grommet theme so that we can see what a theme looks like
+when it is setup for dark mode.
 
-[Layer](https://v2.grommet.io/layer) is one of our favorite components; it is very powerful as it handles accessibility and responsiveness.
-
-We will use it in our example when size is small so that the sidebar takes the entire screen.
-
-Please import the Layer first:
+First we need to import the `deepMerge` function that will allow us to combine two
+grommet themes. We will also need to import the grommet theme.
 
 ```diff
-+import {
+import {
+  Button,
+  Grommet,
++ grommet,
+  Header,
+  Page,
+  PageContent,
+  PageHeader,
+  Text,
+} from "grommet";
++ import { deepMerge } from "grommet/utils";
+```
+
+Now lets adjust our custom theme.
+
+```diff
+- const theme = {
++ const theme = deepMerge(grommet, {
+  global: {
+    colors: {
+      brand: "#228BE6",
+    },
+    font: {
+      family: "Roboto",
+      size: "14px",
+      height: "20px",
+    },
+  },
++ });
+- };
+```
+
+Now when we toggle our dark and light button we should see some changes.
+
+## Add Tip
+
+The purpose of our light/dark toggle button may not be obvious just from the icons.
+Let's add a [Tip] to the `Button` that gives some additional guidance.
+
+```diff
+import {
 + Box,
-+ Button,
-+ Collapsible,
+  Button,
+  Grommet,
+  grommet,
+  Header,
+  Page,
+  PageContent,
+  PageHeader,
+  Text,
+} from "grommet";
+```
+
+```diff
+<Button
+  a11yTitle={dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+  icon={dark ? <Moon /> : <Sun />}
+  onClick={() => setDark(!dark)}
++  tip={{
++    content: (
++      <Box
++        pad="small"
++        round="small"
++        background={dark ? "dark-1" : "light-3"}
++      >
++        {dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
++      </Box>
++    ),
++    plain: true,
++  }}
+/>
+```
+
+Now when we hover over the Button it will give us more info on what the Button does.
+
+## Add Grid and Cards
+
+Let's add some more content to our App. We will need to add the following components:
+
+```diff
+import {
+  Box,
+  Button,
++ Card,
++ CardHeader,
++ CardBody,
++ CardFooter,
++ Grid,
+  Grommet,
+  grommet,
+  Header,
 + Heading,
-+ Grommet,
-+ Layer,
+  Page,
+  PageContent,
+  PageHeader,
++ Paragraph,
+  Text,
+} from "grommet";
+```
+
+Let's create a CardTemplate component.
+
+```diff
++ const CardTemplate = ({ title }) => {
++   return (
++     <Card>
++       <CardHeader pad="medium">
++         <Heading level={2} margin="none">
++           {title}
++         </Heading>
++       </CardHeader>
++       <CardBody pad="medium">
++         <Paragraph>
++           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
++           porttitor non nulla ac vehicula. Aliquam erat volutpat. Mauris auctor
++           faucibus est at mattis. Aliquam a enim ac nisi aliquam consectetur et
++           ac velit. Mauris ut imperdiet libero.
++         </Paragraph>
++       </CardBody>
++       <CardFooter pad="medium" background="background-contrast">
++         Footer
++       </CardFooter>
++     </Card>
++   );
++ };
+```
+
+Now let's add some cards to the `PageContent` within the App.
+
+```diff
+<PageContent>
+  <PageHeader title="Welcome to Grommet!" />
++ <CardTemplate title={"Card 1"} />
++ <CardTemplate title={"Card 2"} />
++ <CardTemplate title={"Card 3"} />
+</PageContent>
+```
+
+Our App now contains some Cards but they looks a little strange stretching across the
+entire Page. Let's organize our Cards within a [Grid].
+
+```diff
+<PageContent>
+  <PageHeader title="Welcome to Grommet!" />
++ <Grid columns="medium" gap="large" pad={{ bottom: "large" }}>
+    <CardTemplate title={"Card 1"} />
+    <CardTemplate title={"Card 2"} />
+    <CardTemplate title={"Card 3"} />
++ </Grid>
+</PageContent>
+```
+
+Now that are Cards are contained within a Grid, they sit nicely side by side.
+
+## Making it responsive
+
+If you adjust the size of the browser window, not ice that Grommet is taking care of a
+lot of the responsive behavior for us.
+
+On a small screen (around the size of most mobile devices) the content within the cards gets to be a bit long. Let's change the text content in the c=Cards so that it truncates
+after 3 lines when we are in a small viewport.
+
+First we need to import [ResponsiveContext](https://v2.grommet.io/responsivecontext).
+
+```diff
+import {
+  Box,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Grid,
+  Grommet,
+  grommet,
+  Header,
+  Heading,
+  Page,
+  PageContent,
+  PageHeader,
+  Paragraph,
 + ResponsiveContext,
-+} from 'grommet';
+  Text,
+} from "grommet";
 ```
 
-We now can change the logic to swap between Collapsible and Layer.
+Now let's change CardTemplate to use `ResponsiveContext`. `ResponsiveContext` uses [react context api](https://reactjs.org/docs/context.html) behind the scenes.
 
 ```diff
-- {size !== 'small' && (
-+ {(!showSidebar || size !== 'small') ? (
-    <Collapsible direction="horizontal" open={showSidebar}>
-      <Box
-        flex
-        width='medium'
-        background='light-2'
-        elevation='small'
-        align='center'
-        justify='center'
-      >
-        sidebar
-      </Box>
-    </Collapsible>
-+ ): (
-+   <Layer>
-+     <Box
-+       fill
-+       background='light-2'
-+       align='center'
-+       justify='center'
-+     >
-+       sidebar
-+     </Box>
-+   </Layer>
-  )}
+const CardTemplate = ({ title }) => {
++ const size = useContext(ResponsiveContext);
+  return (
+    <Card>
+      <CardHeader pad="medium">
+        <Heading level={2} margin="none">
+          {title}
+        </Heading>
+      </CardHeader>
+      <CardBody pad="medium">
+-       <Paragraph>
++       <Paragraph maxLines={size === "small" ? 3 : undefined}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+          porttitor non nulla ac vehicula. Aliquam erat volutpat. Mauris auctor
+          faucibus est at mattis. Aliquam a enim ac nisi aliquam consectetur et
+          ac velit. Mauris ut imperdiet libero.
+        </Paragraph>
+      </CardBody>
+      <CardFooter pad="medium" background="background-contrast">
+        Footer
+      </CardFooter>
+    </Card>
+  );
+};
 ```
 
-You can resize your browser now, and you will see that the sidebar takes over in mobile.
-But there is no way to close it, however that's easy to fix.
-
-Import the `FormClose` icon:
-
-```diff
-- import { Notification } from 'grommet-icons';
-+ import { FormClose, Notification } from 'grommet-icons';
-```
-
-Let's add that to our Layer.
-
-```diff
-<Layer>
-+ <Box
-+   background='light-2'
-+   tag='header'
-+   justify='end'
-+   align='center'
-+   direction='row'
-+ >
-+   <Button
-+     icon={<FormClose />}
-+     onClick={() => setShowSidebar(false)}
-+   />
-+ </Box>
-  <Box
-    fill
-    background='light-2'
-    align='center'
-    justify='center'
-  >
-    sidebar
-  </Box>
-</Layer>
-```
+Now when you view the page with a narrow viewport the Paragraph content in the Cards will be truncated at 3 lines.
 
 Well, let's celebrate because now we have a responsive Grommet app, thanks for hanging with us until now.
-
-## Using the Light and Dark Theme Modes
-
-Grommet has the ability to toggle between light and dark modes baked into the theme. To toggle the theme from the application level, you can use the `themeMode` prop for the Grommet component:
-
-```js
-<Grommet theme={theme} themeMode="dark">
-```
-
-This is useful when you wish to add a toggle for light and dark modes at the application level.
 
 ## Final Considerations
 
@@ -576,10 +597,20 @@ If you cannot reproduce it, inspect your elements, and you will probably find so
 
 Finally, here are some additional pointers to keep you engaged:
 
-1) [Using Grommet in an existing app tutorial](https://github.com/grommet/grommet-starter-existing-app)
-2) [Grommet Storybook](https://storybook.grommet.io) - a lot of examples on how to use our components. Most of them are not real app scenarios though. They are there to illustrate our different props.
-3) [Grommet Sandbox](https://codesandbox.io/s/github/grommet/grommet-sandbox) - more friendly when you want to edit and play with the examples, also does not have real app scenarios.
-4) [Grommet Vending](https://github.com/grommet/grommet-vending) - a sample app done in v2.
-5) [Grommet Controls](https://grommet-nextjs.herokuapp.com/add-ons) - higher level grommet components maintained by one of our external contributors [Atanas Stoyanov](https://github.com/atanasster).
-6) [Grommet Site](https://github.com/grommet/grommet-site) - site for v2 implemented in grommet v2, of course.
-7) [Grommet Slack Inviter](http://slackin.grommet.io/) - don't forget to join our awesome community!
+1. [Using Grommet in an existing app tutorial](https://github.com/grommet/grommet-starter-existing-app)
+2. [Grommet Storybook](https://storybook.grommet.io) - a lot of examples on how to use our components. Most of them are not real app scenarios though. They are there to illustrate our different props.
+3. [Grommet Sandbox](https://codesandbox.io/s/github/grommet/grommet-sandbox) - more friendly when you want to edit and play with the examples, also does not have real app scenarios.
+4. [Grommet Site](https://github.com/grommet/grommet-site) - resources and documentation for Grommet components can be found here.
+5. [Grommet Slack Inviter](https://slack-invite.grommet.io/) - don't forget to join our awesome community!
+
+[box]: https://v2.grommet.io/box
+[header]: https://v2.grommet.io/header
+[footer]: https://v2.grommet.io/footer
+[card]: https://v2.grommet.io/card
+[page]: https://v2.grommet.io/page
+[pagecontent]: https://v2.grommet.io/pagecontent
+[pageheader]: https://v2.grommet.io/pageheader
+[usestate]: https://reactjs.org/docs/hooks-state.html
+[grommet-icons]: https://icons.grommet.io/?
+[grid]: https://v2.grommet.io/grid
+[tip]: https://v2.grommet.io/tip

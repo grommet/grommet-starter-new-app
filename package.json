@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "grommet": "^2.0.1",
-    "grommet-icons": "^3.2.0",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
-    "react-scripts": "2.1.1",
-    "styled-components": "^4.0.3"
+    "grommet": "^2.28.0",
+    "grommet-icons": "^4.8.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "styled-components": "^5.3.6"
   },
   "scripts": {
     "start": "react-scripts start",
