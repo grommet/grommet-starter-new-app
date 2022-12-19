@@ -205,7 +205,8 @@ and can accept any props that `Box` can. The benefit of using components like
 `Header` and `Footer` is Grommet takes care of some of the work for you by
 pre-defining some props.
 
-We are going to use a `Header` and `Text` in our app. Let's go the the `App.js` file and import them:
+To start off we are going to use the `Header` and `Text` components in our app. 
+Let's go the the `App.js` file and import them:
 
 ```diff
 - import { Grommet } from 'grommet';
@@ -400,12 +401,54 @@ Now lets adjust our custom theme.
 
 Now when we toggle our dark and light button we should see some changes.
 
+## Add Tip
+
+The purpose of our light/dark toggle button may not be obvious just from the icons.
+Let's add a [Tip] to the `Button` that gives some additional guidance.
+
+```diff
+import {
++ Box,
+  Button,
+  Grommet,
+  grommet,
+  Header,
+  Page,
+  PageContent,
+  PageHeader,
+  Text,
+} from "grommet";
+```
+
+```diff
+<Button
+  a11yTitle={dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+  icon={dark ? <Moon /> : <Sun />}
+  onClick={() => setDark(!dark)}
++  tip={{
++    content: (
++      <Box
++        pad="small"
++        round="small"
++        background={dark ? "dark-1" : "light-3"}
++      >
++        {dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
++      </Box>
++    ),
++    plain: true,
++  }}
+/>
+```
+
+Now when we hover over the Button it will give us more info on what the Button does.
+
 ## Add Grid and Cards
 
 Let's add some more content to our App. We will need to add the following components:
 
 ```diff
 import {
+  Box,
   Button,
 + Card,
 + CardHeader,
@@ -490,6 +533,7 @@ First we need to import [ResponsiveContext](https://v2.grommet.io/responsivecont
 
 ```diff
 import {
+  Box,
   Button,
   Card,
   CardHeader,
@@ -569,3 +613,4 @@ Finally, here are some additional pointers to keep you engaged:
 [usestate]: https://reactjs.org/docs/hooks-state.html
 [grommet-icons]: https://icons.grommet.io/?
 [grid]: https://v2.grommet.io/grid
+[tip]: https://v2.grommet.io/tip
