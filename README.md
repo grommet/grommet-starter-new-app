@@ -2,6 +2,8 @@
 
 Welcome :tada:! Thanks for your interest in starting fresh with Grommet, we are thrilled to have you on board.
 
+[Deploy preview](https://deploy-preview-43--peppy-mooncake-22f850.netlify.app/) of the finished app.
+
 ## Prerequisites
 
 This tutorial assumes that you have node.js and a package manager; either npm (npm is installed with node.js) or yarn package manager. Create react app can be installed globally or locally using npx (npx comes with npm 5.2+).
@@ -205,7 +207,7 @@ and can accept any props that `Box` can. The benefit of using components like
 `Header` and `Footer` is Grommet takes care of some of the work for you by
 pre-defining some props.
 
-To start off we are going to use the `Header` and `Text` components in our app. 
+To start off we are going to use the `Header` and `Text` components in our app.
 Let's go the the `App.js` file and import them:
 
 ```diff
