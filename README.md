@@ -151,7 +151,7 @@ The answer is simple: Although not strictly required,
 we recommend you add `Grommet` from day one, so that you can customize it
 in the future by using a `theme`.
 
-Let's now and add a custom font-family, font-size, and line-height.
+Let's now add a custom font-family, font-size, and line-height.
 
 Below the `import` statements, let's add an initial theme declaration:
 
